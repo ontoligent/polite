@@ -1,0 +1,16 @@
+num-topics 20
+num-top-words 10 
+num-iterations 1000
+optimize-interval 100
+num-threads 4
+num-top-docs 5
+doc-topics-max 10
+show-topics-interval 100input corpus/mallet-corpus.mallet
+output-topic-keys output/topic-keys.txt
+output-doc-topics output/doc-topics.txt
+word-topic-counts-file output/word-topic-counts.txt
+topic-word-weights-file output/topic-word-weights.txt
+xml-topic-report output/topic-report.xml
+xml-topic-phrase-report output/topic-phrase-report.xml
+diagnostics-file output/diagnostics.xml
+output-state output/output-state.gz
