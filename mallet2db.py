@@ -1,8 +1,8 @@
-import os
-import time
+# import os
+# import time
 import re
 import pandas as pd
-from itertools import combinations
+# from itertools import combinations
 from lxml import etree
 from scipy import stats
 
@@ -176,6 +176,7 @@ class Mallet2Db():
 if __name__ == '__main__':
 
     import sys
+    import os
 
     train_config_file = 'config-train-topics.txt'
     tables_dir = './tables/'
