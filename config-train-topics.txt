@@ -5,7 +5,8 @@ optimize-interval 100
 num-threads 4
 num-top-docs 5
 doc-topics-max 10
-show-topics-interval 100input corpus/mallet-corpus.mallet
+show-topics-interval 100
+input corpus/mallet-corpus.mallet
 output-topic-keys output/topic-keys.txt
 output-doc-topics output/doc-topics.txt
 word-topic-counts-file output/word-topic-counts.txt
