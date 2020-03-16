@@ -1,8 +1,5 @@
-# import os
-# import time
 import re
 import pandas as pd
-# from itertools import combinations
 from lxml import etree
 from scipy import stats
 
