@@ -182,7 +182,7 @@ if __name__ == '__main__':
     if not os.path.exists(tables_dir):
         os.mkdir(tables_dir)
 
-    m2d = Mallet2Db(train_config_file, dir=tables_dir)
+    m2d = Mallet2Db(train_config_file, tables_dirdir=tables_dir)
     m2d.import_table_state()
     m2d.import_table_topic()
     m2d.import_tables_topicword_and_word()
