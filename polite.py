@@ -172,6 +172,16 @@ class Polite():
         topicword_diags.set_index(['topic_id', 'word_id'], inplace=True)
         topicword_diags.to_csv(self.tables_dir + 'TOPICWORD_DIAGS.csv')
 
+    def do_all(self):
+        """Run all importers and adders"""
+        self.import_table_state()
+        self.import_table_topic()
+        self.import_tables_topicword_and_word()
+        self.import_table_doctopic()
+        self.import_table_topicphrase()
+        self.add_diagnostics()
+        self.add_topic_glosses()
+
 
 if __name__ == '__main__':
 
@@ -183,11 +193,12 @@ if __name__ == '__main__':
     if not os.path.exists(tables_dir):
         os.mkdir(tables_dir)
 
-    m2d = Polite(train_config_file, tables_dir=tables_dir)
-    m2d.import_table_state()
-    m2d.import_table_topic()
-    m2d.import_tables_topicword_and_word()
-    m2d.import_table_doctopic()
-    m2d.import_table_topicphrase()
-    m2d.add_diagnostics()
-    m2d.add_topic_glosses()
+    polite = Polite(train_config_file, tables_dir=tables_dir)
+    polite.do_all()
+    # m2d.import_table_state()
+    # m2d.import_table_topic()
+    # m2d.import_tables_topicword_and_word()
+    # m2d.import_table_doctopic()
+    # m2d.import_table_topicphrase()
+    # m2d.add_diagnostics()
+    # m2d.add_topic_glosses()
