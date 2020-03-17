@@ -2,6 +2,7 @@ import re
 import pandas as pd
 from lxml import etree
 from scipy import stats
+import gzip
 
 class Mallet2Db():
 
@@ -14,18 +15,20 @@ class Mallet2Db():
             for line in cfg.readlines():
                 if not re.match(r'^#', line):
                     a, b = line.split()
+                    b = b.strip()
                     if re.match(r'^\d+$', b):
                         b = int(b)
-                    elif re.match(r'TRUE', b):
+                    elif re.match(r'^\d+\.\d*$', b):
+                        b = float(b)
+                    elif re.match(r'^TRUE$', b, flags=re.IGNORECASE):
                         b = True
-                    elif re.match(r'FALSE', b):
+                    elif re.match(r'^FALSE$', b, flags=re.IGNORECASE):
                         b = False
                     self.config[a] = b
 
     def import_table_state(self):
         """Import the state file into docword table"""
         src_file = self.config['output-state']
-        import gzip
         with gzip.open(src_file, 'rb') as f:
             docword = pd.DataFrame(
                 [line.split() for line in f.readlines()[3:]],
@@ -38,9 +41,9 @@ class Mallet2Db():
     def import_table_topic(self):
         """Import data into topic table"""
         src_file = self.config['output-topic-keys']
-        topic = pd.read_csv(src_file, sep='\t', header=None, index_col=False,
+        topic = pd.read_csv(src_file, sep='\t', header=None, index_col='topic_id',
                             names=['topic_id', 'topic_alpha', 'topic_words'])
-        topic.set_index('topic_id', inplace=True)
+        # topic.set_index('topic_id', inplace=True)
         topic['topic_alpha_zscore'] = stats.zscore(topic.topic_alpha)
         topic['topic_gloss'] = 'TBA'
         topic.to_csv(self.tables_dir + 'TOPIC.csv')
