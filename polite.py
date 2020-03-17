@@ -4,7 +4,7 @@ from lxml import etree
 from scipy import stats
 import gzip
 
-class Mallet2Db():
+class Polite():
 
     def __init__(self, config_file, tables_dir='./'):
         """Initialize MALLET with trial name""" 
@@ -183,7 +183,7 @@ if __name__ == '__main__':
     if not os.path.exists(tables_dir):
         os.mkdir(tables_dir)
 
-    m2d = Mallet2Db(train_config_file, tables_dir=tables_dir)
+    m2d = Polite(train_config_file, tables_dir=tables_dir)
     m2d.import_table_state()
     m2d.import_table_topic()
     m2d.import_tables_topicword_and_word()
