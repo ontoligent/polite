@@ -181,24 +181,3 @@ class Polite():
         self.import_table_topicphrase()
         self.add_diagnostics()
         self.add_topic_glosses()
-
-
-if __name__ == '__main__':
-
-    import sys
-    import os
-
-    train_config_file = 'config-train-topics.txt'
-    tables_dir = './tables/'
-    if not os.path.exists(tables_dir):
-        os.mkdir(tables_dir)
-
-    polite = Polite(train_config_file, tables_dir=tables_dir)
-    polite.do_all()
-    # m2d.import_table_state()
-    # m2d.import_table_topic()
-    # m2d.import_tables_topicword_and_word()
-    # m2d.import_table_doctopic()
-    # m2d.import_table_topicphrase()
-    # m2d.add_diagnostics()
-    # m2d.add_topic_glosses()
