@@ -35,13 +35,14 @@ class Polite():
                     self.config[a] = b
 
     def get_source_file(self, src_file_key):
+        msg = """Try running MALLET first."""
         try:
             src_file = self.config[src_file_key]
         except ImportError as e:
-            print("File for {} not defined.".format(src_file_key))
+            print("File for {} not defined. {}".format(src_file_key, msg))
             sys.exit()
         if not os.path.isfile(src_file):
-            print("File {} does not exist.".format(src_file))
+            print("File {} does not exist. {}".format(src_file, msg))
             sys.exit()
         return src_file
 
