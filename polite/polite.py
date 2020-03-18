@@ -6,8 +6,14 @@ import gzip
 
 class Polite():
 
+    # 'topic-word-weights-file', 'xml-topic-report'
+    file_params = ['output-topic-keys', 'output-doc-topics',
+    'word-topic-counts-file', 'topic-word-weights-file',
+    'xml-topic-report', 'xml-topic-phrase-report',
+    'diagnostics-file', 'output-state']
+
     def __init__(self, config_file, tables_dir='./'):
-        """Initialize MALLET with trial name""" 
+        """Initialize MALLET with trial name"""
         self.config_file = config_file
         self.tables_dir = tables_dir
         self.config = {}
@@ -26,9 +32,20 @@ class Polite():
                         b = False
                     self.config[a] = b
 
+    def get_source_file(self, src_file_key):
+        try:
+            src_file = self.config[src_file_key]
+        except ImportError as e:
+            print("File for {} not defined.".format(src_file_key))
+            sys.exit()
+        if not os.path.isfile(src_file):
+            print("File {} does not exist.".format(src_file))
+            sys.exit()
+        return src_file
+
     def import_table_state(self):
         """Import the state file into docword table"""
-        src_file = self.config['output-state']
+        src_file = self.get_source_file('output-state') #self.config['output-state']
         with gzip.open(src_file, 'rb') as f:
             docword = pd.DataFrame(
                 [line.split() for line in f.readlines()[3:]],
@@ -40,7 +57,7 @@ class Polite():
 
     def import_table_topic(self):
         """Import data into topic table"""
-        src_file = self.config['output-topic-keys']
+        src_file = self.get_source_file('output-topic-keys') #self.config['output-topic-keys']
         topic = pd.read_csv(src_file, sep='\t', header=None, index_col='topic_id',
                             names=['topic_id', 'topic_alpha', 'topic_words'])
         # topic.set_index('topic_id', inplace=True)
@@ -50,7 +67,7 @@ class Polite():
 
     def import_tables_topicword_and_word(self):
         """Import data into topicword and word tables"""
-        src_file = self.config['word-topic-counts-file']
+        src_file = self.get_source_file('word-topic-counts-file') #self.config['word-topic-counts-file']
         WORD = []
         TOPICWORD = []
         with open(src_file, 'r') as src:
@@ -70,7 +87,7 @@ class Polite():
 
     def import_table_doctopic(self):
         """Import data into doctopic table"""
-        src_file = self.config['output-doc-topics']
+        src_file = self.get_source_file('output-doc-topics') #self.config['output-doc-topics']
         doctopic = pd.read_csv(src_file, sep='\t', header=None)
         doc = pd.DataFrame(doctopic.iloc[:, 1])
         doc.columns = ['doc_tmp']
@@ -95,7 +112,7 @@ class Polite():
 
     def import_table_topicphrase(self):
         """Import data into topicphrase table"""
-        src_file = self.config['xml-topic-phrase-report']
+        src_file = self.get_source_file('xml-topic-phrase-report') #self.config['xml-topic-phrase-report']
         TOPICPHRASE = []
         tree = etree.parse(src_file)
         for topic in tree.xpath('/topics/topic'):
@@ -120,7 +137,7 @@ class Polite():
 
     def add_diagnostics(self):
         """Add diagnostics data to topics and topicword_diags tables"""
-        src_file = self.config['diagnostics-file']
+        src_file = self.get_source_file('diagnostics-file') #self.config['diagnostics-file']
         TOPIC = []
         TOPICWORD = []
         tkeys = ['id', 'tokens', 'document_entropy', 'word-length', 'coherence',
