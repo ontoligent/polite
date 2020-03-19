@@ -19,6 +19,8 @@ except IndexError:
 if not re.search(r'/$', tables_dir):
     tables_dir + '/'
 
+print(tables_dir)
+
 if not os.path.isfile(tables_dir):
     os.mkdir(tables_dir)
 
