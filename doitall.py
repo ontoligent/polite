@@ -10,7 +10,7 @@ train_config_file = 'config-train-topics.txt'
 cmds = [
     "mallet import-file --config {}".format(import_config_file),
     "mallet train-topics --config {}".format(train_config_file),
-    "{} test.py".format(python)
+    "{} mktables.py".format(python)
 ]
 print("Importing corpus with command: {}".format(cmds[0]))
 os.system(cmds[0])
