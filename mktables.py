@@ -22,7 +22,10 @@ if not re.search(r'/$', tables_dir):
 print(tables_dir)
 
 if not os.path.isfile(tables_dir):
-    os.mkdir(tables_dir)
+    try:
+        os.mkdir(tables_dir)
+    except FileExistsError:
+        pass
 
 print("Using config file \"{}\" and tables dir \"{}\"."\
       .format(train_config_file, tables_dir))
