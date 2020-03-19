@@ -8,11 +8,11 @@ import gzip
 
 class Polite():
 
-    # 'topic-word-weights-file', 'xml-topic-report'
-    file_params = ['output-topic-keys', 'output-doc-topics',
-    'word-topic-counts-file', 'topic-word-weights-file',
-    'xml-topic-report', 'xml-topic-phrase-report',
-    'diagnostics-file', 'output-state']
+    # NOTE USED: 'topic-word-weights-file', 'xml-topic-report'
+    # file_params = ['output-topic-keys', 'output-doc-topics',
+    # 'word-topic-counts-file', 'topic-word-weights-file',
+    # 'xml-topic-report', 'xml-topic-phrase-report',
+    # 'diagnostics-file', 'output-state']
 
     def __init__(self, config_file, tables_dir='./'):
         """Initialize MALLET with trial name"""
@@ -70,7 +70,7 @@ class Polite():
 
     def import_tables_topicword_and_word(self):
         """Import data into topicword and word tables"""
-        src_file = self.get_source_file('word-topic-counts-file') #self.config['word-topic-counts-file']
+        src_file = self.get_source_file('word-topic-counts-file')
         WORD = []
         TOPICWORD = []
         with open(src_file, 'r') as src:
@@ -79,14 +79,25 @@ class Polite():
                 (word_id, word_str) = row[0:2]
                 WORD.append((int(word_id), word_str))
                 for item in row[2:]:
-                    (topic_id, word_count) = item.split(':')
+                    topic_id, word_count = item.split(':')
                     TOPICWORD.append((int(word_id), int(topic_id), int(word_count)))
         word = pd.DataFrame(WORD, columns=['word_id', 'word_str'])
         topicword = pd.DataFrame(TOPICWORD, columns=['word_id', 'topic_id', 'word_count'])
         word.set_index('word_id', inplace=True)
         topicword.set_index(['word_id', 'topic_id'], inplace=True)
         word.to_csv(self.tables_dir + 'VOCAB.csv')
-        topicword.to_csv(self.tables_dir + 'TOPICWORD.csv')
+        topicword.to_csv(self.tables_dir + 'TOPICWORD_NARROW.csv')
+
+        topicword_wide = topicword.unstack(fill_value=0)
+        topicword_wide.columns = topicword_wide.columns.droplevel(0)
+        topicword_wide = topicword_wide / topicword_wide.sum()
+        topicword_wide.to_csv(self.tables_dir + 'TOPICWORD.csv')
+
+        src_file2 = self.get_source_file('topic-word-weights-file')
+        topicword_w = pd.read_csv(src_file2,  sep='\t',
+                                  names=['topic_id','word_str','word_wgt'],
+                                  index_col=['topic_id','word_str'])
+        topicword_w.to_csv(self.tables_dir + 'TOPICWORD_WEIGHTS.csv')
 
     def import_table_doctopic(self):
         """Import data into doctopic table"""
