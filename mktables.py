@@ -17,7 +17,7 @@ except IndexError:
     tables_dir = default_tables_dir
 
 if not re.search(r'/$', tables_dir):
-    tables_dir + '/'
+    tables_dir = tables_dir + '/'
 
 print(tables_dir)
 
