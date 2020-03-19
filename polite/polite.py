@@ -105,7 +105,7 @@ class Polite():
         doctopic = pd.read_csv(src_file, sep='\t', header=None)
         doc = pd.DataFrame(doctopic.iloc[:, 1])
         doc.columns = ['doc_tmp']
-        doc['src_doc_id'] = doc.doc_tmp.apply(lambda x: int(x.split(',')[0]))
+        doc['src_doc_id'] = doc.doc_tmp.apply(lambda x: x.split(',')[0])
         doc['doc_label'] = doc.doc_tmp.apply(lambda x: x.split(',')[1])
         doc = doc[['src_doc_id', 'doc_label']]
         doc.index.name = 'doc_id' 
