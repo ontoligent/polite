@@ -16,7 +16,7 @@ except IndexError:
     print("Using default tables dir.")
     tables_dir = default_tables_dir
 
-if not re.match('\/$', tables_dir):
+if not re.match(r'/$', tables_dir):
     tables_dir + '/'
 
 if not os.path.isfile(tables_dir):
