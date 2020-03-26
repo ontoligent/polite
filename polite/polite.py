@@ -54,7 +54,7 @@ class Polite():
                 [line.split() for line in f.readlines()[3:]],
                 columns=['doc_id', 'src', 'word_pos', 'word_id', 'word_str', 'topic_id'])
             docword = docword[['doc_id', 'word_id', 'word_pos', 'topic_id']]
-            docword = docword.astype('int')
+            # docword = docword.astype('int')
             docword.set_index(['doc_id', 'word_id'], inplace=True)
             docword.to_csv(self.tables_dir + 'DOCWORD.csv')
 
