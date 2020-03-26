@@ -68,6 +68,7 @@ if not os.path.isfile('./output/{}'.format(keyword)):
         pass
 
 # Run the topic model
+print("Running topic model.")
 # Eventually provide ways to override these defaults
 params = {
     'num-topics': n_topics,
@@ -92,5 +93,8 @@ cmds = []
 for k, v in params.items():
     cmds.append("--{} {}".format(k, v))
 train_cmd = "{} train-topics".format(mallet_bin) + ' '.join(cmds)
+print("Command to be executed.")
 print(train_cmd)
+os.system(cmd)
+print("Done with training model.")
 
