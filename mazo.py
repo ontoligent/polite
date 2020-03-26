@@ -46,7 +46,7 @@ if not os.path.isfile(corpus_file):
     sys.exit()
 
 # See if corpus file has been imported
-mallet_file = "corpus/{}-corpus.mallet"
+mallet_file = "corpus/{}-corpus.mallet".format(keyword)
 if not os.path.isfile(mallet_file):
     print("MALLET file {} not found. Creating it now.".format(mallet_file))
     cmd = "{} import-file --input {} --output {} --keep-sequence true --remove-stopwords true"\
