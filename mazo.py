@@ -92,7 +92,7 @@ params = {
 cmds = []
 for k, v in params.items():
     cmds.append("--{} {}".format(k, v))
-train_cmd = "{} train-topics".format(mallet_bin) + ' '.join(cmds)
+train_cmd = "{} train-topics ".format(mallet_bin) + ' '.join(cmds)
 print("Command to be executed.")
 print(train_cmd)
 os.system(train_cmd)
