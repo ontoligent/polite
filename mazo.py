@@ -65,6 +65,7 @@ if not os.path.isfile(mallet_output_dir):
 import time
 trial_key = str(time.time()).replace('.', '')
 mallet_trial_dir = "{}/{}-{}".format(mallet_output_dir, keyword, trial_key)
+print("Creating output directory {}".format(mallet_trial_dir))
 if not os.path.isfile(mallet_trial_dir):
     try:
         os.mkdir(mallet_trial_dir)
@@ -101,4 +102,25 @@ print("Command to be executed.")
 print(train_cmd)
 os.system(train_cmd)
 print("Done with training model.")
+
+# Make trial config file
+mallet_trial_config = "{}/.config.txt".format(mallet_trial_dir)
+print("Printing config file {}.".format(mallet_trial_config))
+with open(mallet_trial_config, 'w') as cfg_file:
+    for k, v in params.items():
+        cfg_file.write("{} {}\n".format(k, v))
+
+# Convert MALLET outpupt files to tables
+tables_dir = "{}/tables".format(mallet_trial_dir)
+print("Putting tables in {}".format(tables_dir))
+if not os.path.isfile(tables_dir):
+    try:
+        os.mkdir(tables_dir)
+    except FileExistsError:
+        pass
+
+p = Polite(mallet_trial_config, tables_dir)
+p.do_all()
+
+print("Done.")
 
