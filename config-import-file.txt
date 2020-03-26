@@ -1,0 +1,4 @@
+input corpus/mallet-corpus.csv
+output corpus/mallet-corpus.mallet
+keep-sequence TRUE
+remove-stopwords TRUE
