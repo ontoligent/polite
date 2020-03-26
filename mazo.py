@@ -79,7 +79,7 @@ params = {
     'num-top-docs': 5,
     'doc-topics-max': 10,
     'show-topics-interval': 100,
-    'input corpus': mallet_file,
+    'input': mallet_file,
     'output-topic-keys': 'output/{}/topic-keys.txt'.format(keyword),
     'output-doc-topics': 'output/{}/doc-topics.txt'.format(keyword),
     'word-topic-counts-file': 'output/{}/word-topic-counts.txt'.format(keyword),
