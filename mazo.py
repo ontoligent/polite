@@ -61,17 +61,19 @@ if not os.path.isfile(mallet_output_dir):
     except FileExistsError:
         pass
 
-if not os.path.isfile('{}/{}'.format(mallet_output_dir, keyword)):
+# Create trial directory
+import time
+trial_key = str(time.time()).replace('.', '')
+mallet_trial_dir = "{}/{}-{}".format(mallet_output_dir, keyword, trial_key)
+if not os.path.isfile(mallet_trial_dir):
     try:
-        os.mkdir('{}/{}'.format(keyword))
+        os.mkdir(mallet_trial_dir)
     except FileExistsError:
         pass
 
 # Run the topic model
+# todo: Eventually provide ways to override these defaults
 print("Running topic model.")
-# Eventually provide ways to override these defaults
-trial_key = os.utime()
-mallet_trial_dir = "{}/{}-{}".format(mallet_output_dir, keyword, trial_key)
 params = {
     'num-topics': n_topics,
     'num-top-words': 10,
