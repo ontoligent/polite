@@ -35,6 +35,12 @@ except IndexError:
 # Get number of topics
 try:
     n_topics = sys.argv[2]
+    if not isinstance(n_topics, int):
+        print("Please enter and integer for the number of topics.")
+        sys.exit()
+    if n_topics > 500:
+        print("That's a large number of topics. Try a smaller number.")
+        sys.exit()
 except IndexError:
     print("No value provided for number of topics. Using 10.")
     n_topics = 10
