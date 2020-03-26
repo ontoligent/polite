@@ -52,10 +52,45 @@ if not os.path.isfile(mallet_file):
     cmd = "{} import-file --input {} --output {} --keep-sequence true --remove-stopwords true"\
         .format(mallet_bin, corpus_file, mallet_file)
     os.system(cmd)
+    print("Done creating MALLET file.")
 
-# if not os.path.isfile():
-#     try:
-#         os.mkdir(tables_dir)
-#     except FileExistsError:
-#         pass
+# Make sure output directory exists
+ if not os.path.isfile('./output'):
+    try:
+        os.mkdir('./output')
+    except FileExistsError:
+        pass
+
+if not os.path.isfile('./output/{}'.format(keyword)):
+    try:
+        os.mkdir('./output/{}'.format(keyword))
+    except FileExistsError:
+        pass
+
+# Run the topic model
+# Eventually provide ways to override these defaults
+params = {
+    'num-topics': n_topics,
+    'num-top-words': 10,
+    'num-iterations': 1000,
+    'optimize-interval': 100,
+    'num-threads': 4,
+    'num-top-docs': 5,
+    'doc-topics-max': 10,
+    'show-topics-interval': 100,
+    'input corpus': mallet_file,
+    'output-topic-keys': 'output/{}/topic-keys.txt'.format(keyword),
+    'output-doc-topics': 'output/{}/doc-topics.txt'.format(keyword),
+    'word-topic-counts-file': 'output/{}/word-topic-counts.txt'.format(keyword),
+    'topic-word-weights-file': 'output/{}/topic-word-weights.txt'.format(keyword),
+    'xml-topic-report': 'output/{}/topic-report.xml'.format(keyword),
+    'xml-topic-phrase-report': 'output/{}/topic-phrase-report.xml'.format(keyword),
+    'diagnostics-file': 'output/{}/diagnostics.xml'.format(keyword),
+    'output-state': 'output/{}/output-state.gz'.format(keyword)
+}
+cmds = []
+for k, v in params.items():
+    cmds.append("--{} {}".format(k, v))
+train_cmd = "{} train-topics".format(mallet_bin) + ' '.join(cmds)
+print(train_cmd)
 
