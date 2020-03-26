@@ -55,7 +55,7 @@ if not os.path.isfile(mallet_file):
     print("Done creating MALLET file.")
 
 # Make sure output directory exists
- if not os.path.isfile('./output'):
+if not os.path.isfile('./output'):
     try:
         os.mkdir('./output')
     except FileExistsError:
