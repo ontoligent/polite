@@ -50,7 +50,7 @@ mallet_file = "corpus/{}-corpus.mallet".format(keyword)
 if not os.path.isfile(mallet_file):
     print("MALLET file {} not found. Creating it now.".format(mallet_file))
     cmd = "{} import-file --input {} --output {} --keep-sequence true --remove-stopwords true"\
-        .format(mallet_file, corpus_file, mallet_file)
+        .format(mallet_bin, corpus_file, mallet_file)
     os.system(cmd)
 
 # if not os.path.isfile():
