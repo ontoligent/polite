@@ -119,7 +119,7 @@ if not os.path.isfile(tables_dir):
     except FileExistsError:
         pass
 
-p = Polite(mallet_trial_config, tables_dir)
+p = Polite(mallet_trial_config, tables_dir+'/')
 p.do_all()
 
 print("Done.")
