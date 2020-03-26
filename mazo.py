@@ -95,6 +95,6 @@ for k, v in params.items():
 train_cmd = "{} train-topics".format(mallet_bin) + ' '.join(cmds)
 print("Command to be executed.")
 print(train_cmd)
-os.system(cmd)
+os.system(train_cmd)
 print("Done with training model.")
 
