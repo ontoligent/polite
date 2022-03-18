@@ -1,6 +1,6 @@
 # Polite
 
-Polite is a lite version of Polo. The main function Polite performs is to convert MALLET's topic model output data into tables that can be used a unified data model. 
+Polite is a lite version of <a href="https://github.com/ontoligent-design/polo2" target="_blank">Polo</a>. The main function Polite performs is to convert MALLET's topic model output data into tables that can be used a unified data model. 
 
 # Instructions
 
